@@ -87,12 +87,70 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    print("Depth First Search:\n")
+
+    # Initialize
+    openStates = util.Stack()
+    closedStates = []
+    # (Current State, Legal Actions). Include explicit cost later?
+    openStates.push((problem.getStartState(), []))
+
+    # States remain
+    while not openStates.isEmpty():
+        x = openStates.pop()
+        currentState = x[0]
+        legalActions = x[1]
+        # print('currentState:', x[0], '\nlegalActions:', x[1], '\n')
+        # print('closedStates:\n', closedStates, '\n')
+
+        # Goal found
+        if problem.isGoalState(currentState):
+            return legalActions
+        # Goal not found
+        elif currentState not in closedStates:
+            children = problem.getSuccessors(currentState)
+            closedStates.append(currentState)
+            for child in children:
+                childState = child[0]
+                childActions = child[1]
+                if childState not in closedStates:
+                    childActions = legalActions + [childActions]
+                    openStates.push((childState, childActions))
+    # util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    print("Breadth First Search:\n")
+
+    # Initialize
+    openStates = util.Queue()
+    closedStates = []
+    # (Current State, Legal Actions). Include cost later?
+    openStates.push((problem.getStartState(), []))
+
+    # States remain
+    while not openStates.isEmpty():
+        x = openStates.pop()
+        currentState = x[0]
+        legalActions = x[1]
+        # print('currentState:', x[0], '\nlegalActions:', x[1], '\n')
+        # print('closedStates:\n', closedStates)
+
+        # Goal found
+        if problem.isGoalState(currentState):
+            return legalActions
+        # Goal not found
+        elif currentState not in closedStates:
+            children = problem.getSuccessors(currentState)
+            closedStates.append(currentState)
+            for child in children:
+                childState = child[0]
+                childActions = child[1]
+                if childState not in closedStates:
+                    childActions = legalActions + [childActions]
+                    openStates.push((childState, childActions))
+    # util.raiseNotDefined()
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
